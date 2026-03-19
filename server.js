@@ -1,6 +1,5 @@
 import express from 'express'
 import 'dotenv/config'
-import mongoose from 'mongoose'
 import './db/connection.js'
 import bookRoutes from './routes/bookRoutes.js'
 
@@ -10,7 +9,7 @@ const PORT = process.env.PORT || 3000
 
 app.use(express.json())
 
-app.use('/', bookRoutes)
+app.use('/api/books', bookRoutes)
 
 app.get('/', (req, res) => {
     res.send('Hello World')

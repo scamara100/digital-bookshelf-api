@@ -1,7 +1,9 @@
 import express from 'express'
-import Book from '../models/Book'
+import Book from '../models/Book.js'
 
 const router = express.Router()
+
+// /api/books 
 
 router.post('/', async(req, res) => {
     try{
@@ -18,17 +20,17 @@ router.post('/', async(req, res) => {
 router.get('/', async (req, res) => {
     try{
         // retrieve all document from the products collection
-        const Books = await Book.frind({})
+        const Books = await Book.find({})
         res.status(200).json(Books)
     } catch(e){
-        res.status(400).json({message: e.message})
+        res.status(500).json({message: e.message})
     }
 })
 
-router.get('/:d', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try{
         // Retrieves a single book by its _id
-        const oneBook = await Book.findById(id)
+        const oneBook = await Book.findById(req.params.id)
         res.status(200).json(oneBook)
     } catch(e){
         res.status(400).json({message: e.message})
@@ -38,9 +40,9 @@ router.get('/:d', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try{
         // store the request body in a variable called id
-        const id = req.body
+        const id = req.params.id
         // pass the id to the method for finding and updating a document
-        const updatedBook = await Book.findByIdAndUpdate(id)
+        const updatedBook = await Book.findByIdAndUpdate(id, req.body)
         // when no book with that id is found, the returned value is null (falsey)
         if (!updatedBook) {
             return res.status(404).json({ message: `No Book with ${id} found` })
@@ -54,7 +56,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
    try {
         // store the parameter in a convenient variable called id
-        const id = req.body
+        const id = req.params.id
         // pass the id to the method for finding and deleting a document
         const deletedBook = await Book.findByIdAndDelete(id)
         // when no Book with that id is found, the returned value is null (falsey)
