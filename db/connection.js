@@ -3,7 +3,7 @@ import {mongoose} from 'mongoose'
 import 'dotenv/config'
 
 // store the connection string to a variable
-const uri = process.env.MONGI_URI
+const uri = process.env.MONGO_URI
 
 
 // make an async function to handle the connection and any errors
